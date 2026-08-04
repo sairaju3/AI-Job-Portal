@@ -1,0 +1,19 @@
+# Eclipse
+.metadata/
+
+# Maven
+backend/target/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Environment
+.env
