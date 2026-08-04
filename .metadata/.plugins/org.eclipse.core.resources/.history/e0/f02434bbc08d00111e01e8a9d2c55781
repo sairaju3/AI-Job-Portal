@@ -1,0 +1,64 @@
+package com.aijobportal.backend.service;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.tika.Tika;
+import org.springframework.stereotype.Service;
+
+import com.aijobportal.backend.dto.ResumeAnalysisResponse;
+
+@Service
+public class AIResumeService {
+
+    private static final List<String> SKILLS = Arrays.asList(
+            "Java",
+            "Spring Boot",
+            "Hibernate",
+            "MySQL",
+            "SQL",
+            "REST API",
+            "Docker",
+            "Kubernetes",
+            "AWS",
+            "Git",
+            "React",
+            "HTML",
+            "CSS",
+            "JavaScript"
+    );
+
+    public ResumeAnalysisResponse analyzeResume(String filePath) throws Exception {
+
+        Tika tika = new Tika();
+
+        String text = tika.parseToString(new File(filePath));
+
+        List<String> matchingSkills = new ArrayList<>();
+
+        for (String skill : SKILLS) {
+            if (text.toLowerCase().contains(skill.toLowerCase())) {
+                matchingSkills.add(skill);
+            }
+        }
+
+        ResumeAnalysisResponse response = new ResumeAnalysisResponse();
+
+        response.setMatchingSkills(matchingSkills);
+        response.setMatchPercentage(
+                (matchingSkills.size() * 100) / SKILLS.size());
+
+        response.setMissingSkills(
+                SKILLS.stream()
+                        .filter(skill -> !matchingSkills.contains(skill))
+                        .toList());
+
+        response.setSuggestions(
+                response.getMissingSkills()
+        );
+
+        return response;
+    }
+}

@@ -1,0 +1,5 @@
+package com.aijobportal.backend.service;
+
+public class JobService {
+
+}

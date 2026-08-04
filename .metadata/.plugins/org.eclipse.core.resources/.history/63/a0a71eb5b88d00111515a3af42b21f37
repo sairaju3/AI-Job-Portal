@@ -1,0 +1,40 @@
+package com.aijobportal.backend.service;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.tika.Tika;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.aijobportal.backend.entity.Resume;
+import com.aijobportal.backend.repository.ResumeRepository;
+
+@Service
+public class ResumeService {
+
+    private final ResumeRepository resumeRepository;
+
+    @Value("${file.upload-dir}")
+    private String uploadDir;
+
+    public ResumeService(ResumeRepository resumeRepository) {
+        this.resumeRepository = resumeRepository;
+    }
+    public Resume uploadResume(MultipartFile file, Long userId) throws IOException {
+
+        // Save the file
+
+        Tika tika = new Tika();
+
+        String resumeText = tika.parseToString(file.getInputStream());
+
+        System.out.println("========== Resume Text ==========");
+        System.out.println(resumeText);
+
+        // Save Resume entity
+
+        return resume;
+    }
+}

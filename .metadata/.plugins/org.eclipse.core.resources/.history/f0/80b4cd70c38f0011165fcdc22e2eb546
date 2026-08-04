@@ -1,0 +1,5 @@
+package com.aijobportal.backend.repository;
+
+public class DashboardResponse {
+
+}

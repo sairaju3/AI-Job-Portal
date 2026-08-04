@@ -1,0 +1,51 @@
+package com.aijobportal.backend.service;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.aijobportal.backend.dto.LoginRequest;
+import com.aijobportal.backend.dto.RegisterRequest;
+import com.aijobportal.backend.entity.User;
+import com.aijobportal.backend.repository.UserRepository;
+import com.aijobportal.backend.security.JwtService;
+
+@Service
+public class UserService {
+
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private JwtService jwtService;
+	
+	public User register(RegisterRequest request)
+	{
+		User user = new User();
+		
+		user.setFullName(request.getFullname());
+		user.setEmail(request.getEmail());
+		user.setPassword(passwordEncoder.encode(request.getPassword()));
+		user.setRole(request.getRole());
+		
+		return userRepository.save(user);
+	}
+	
+	public String login(LoginRequest request) {
+
+	    User user = userRepository.findByEmail(request.getEmail())
+	            .orElseThrow(() -> new RuntimeException("User not found"));
+
+	    if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+	        throw new RuntimeException("Invalid Password");
+	    }
+
+	    return jwtService.generateToken(user.getEmail());
+	}
+	public User findByEmail(String email) {
+
+	    return userRepository.findByEmail(email)
+	            .orElseThrow(() -> new RuntimeException("User not found"));
+
+	}
+}

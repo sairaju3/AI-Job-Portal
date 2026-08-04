@@ -1,0 +1,16 @@
+package com.aijobportal.backend.dto;
+
+import java.util.List;
+import lombok.Data;
+
+@Data
+public class JobMatchResponse {
+
+    private String jobTitle;
+
+    private int matchPercentage;
+
+    private List<String> matchingSkills;
+
+    private List<String> missingSkills;
+}

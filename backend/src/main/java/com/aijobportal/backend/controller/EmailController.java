@@ -1,0 +1,28 @@
+package com.aijobportal.backend.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.aijobportal.backend.service.EmailService;
+
+@RestController
+public class EmailController {
+
+    private final EmailService emailService;
+
+    public EmailController(EmailService emailService) {
+        this.emailService = emailService;
+    }
+
+    @GetMapping("/api/email/test")
+    public String sendTestEmail() {
+
+        emailService.sendEmail(
+                "parasasai345@gmail.com",
+                "AI Job Portal Test",
+                "Congratulations! Your email configuration is working."
+        );
+
+        return "Email Sent Successfully";
+    }
+}

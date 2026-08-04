@@ -1,0 +1,5 @@
+package com.aijobportal.backend.dto;
+
+public class LoginResponse {
+
+}

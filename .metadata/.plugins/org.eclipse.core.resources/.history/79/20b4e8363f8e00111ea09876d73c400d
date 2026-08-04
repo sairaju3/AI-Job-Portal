@@ -1,0 +1,41 @@
+package com.aijobportal.backend.controller;
+
+import org.springframework.web.bind.annotation.*;
+
+import com.aijobportal.backend.dto.JobMatchResponse;
+import com.aijobportal.backend.entity.Job;
+import com.aijobportal.backend.entity.Resume;
+import com.aijobportal.backend.repository.JobRepository;
+import com.aijobportal.backend.repository.ResumeRepository;
+import com.aijobportal.backend.service.JobMatchService;
+
+@RestController
+@RequestMapping("/api/resumes")
+public class JobMatchController {
+
+    private final ResumeRepository resumeRepository;
+    private final JobRepository jobRepository;
+    private final JobMatchService jobMatchService;
+
+    public JobMatchController(ResumeRepository resumeRepository,
+                              JobRepository jobRepository,
+                              JobMatchService jobMatchService) {
+        this.resumeRepository = resumeRepository;
+        this.jobRepository = jobRepository;
+        this.jobMatchService = jobMatchService;
+    }
+
+    @GetMapping("/match/{resumeId}/{jobId}")
+    public JobMatchResponse matchResume(
+            @PathVariable Long resumeId,
+            @PathVariable Long jobId) throws Exception {
+
+        Resume resume = resumeRepository.findById(resumeId)
+                .orElseThrow(() -> new RuntimeException("Resume not found"));
+
+        Job job = jobRepository.findById(jobId)
+                .orElseThrow(() -> new RuntimeException("Job not found"));
+
+        return jobMatchService.matchResumeWithJob(resume, job);
+    }
+}
