@@ -22,36 +22,35 @@ function AddJob() {
         });
     };
 
-    const addJob = async (e) => {
+   const addJob = async (e) => {
 
-        e.preventDefault();
+    e.preventDefault();
 
-        try {
+    try {
 
-           const email = localStorage.getItem("email");
+        const token = localStorage.getItem("token");
+        const email = localStorage.getItem("email");
 
-            await axios.post(
-                `https://ai-job-portal-xx67.onrender.com/api/jobs?recruiterEmail=${encodeURIComponent(email)}`,
-                job,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
+        await axios.post(
+            `https://ai-job-portal-xx67.onrender.com/api/jobs?recruiterEmail=${encodeURIComponent(email)}`,
+            job,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
-            );
+            }
+        );
 
-            alert("✅ Job Posted Successfully");
+        alert("✅ Job Posted Successfully");
+        navigate("/my-jobs");
 
-            navigate("/my-jobs");
+    } catch (error) {
 
-        } catch (error) {
+        console.log(error);
+        alert("Failed to Post Job");
 
-            console.log(error);
-            alert("Failed to Post Job");
-
-        }
-
-    };
+    }
+};
 
     return (
 
