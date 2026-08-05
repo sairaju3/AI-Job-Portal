@@ -22,12 +22,8 @@ public class JobService {
         job.setRecruiterEmail(recruiterEmail);
 
         return jobRepository.save(job);
-    }   public Job addJob(Job job) {
-
-        job.setPostedDate(LocalDate.now());
-
-        return jobRepository.save(job);
-    }
+    } 
+   
 
     // Get All Jobs
     public List<Job> getAllJobs() {
