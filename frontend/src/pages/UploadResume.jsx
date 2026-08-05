@@ -22,7 +22,7 @@ function UploadResume() {
             const token = localStorage.getItem("token");
 
             const response = await axios.post(
-                "http://localhost:8080/api/resumes/upload",
+                "https://ai-job-portal-xx67.onrender.com/api/resumes/upload",
                 formData,
                 {
                     headers: {

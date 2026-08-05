@@ -13,7 +13,7 @@ function ResumeAnalysis() {
             const token = localStorage.getItem("token");
 
             const response = await axios.get(
-                `http://localhost:8080/api/resumes/analyze/${resumeId}`,
+                `https://ai-job-portal-xx67.onrender.com/api/resumes/analyze/${resumeId}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`

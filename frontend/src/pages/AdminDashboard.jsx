@@ -25,7 +25,7 @@ function AdminDashboard() {
             const token = localStorage.getItem("token");
 
             const response = await axios.get(
-                "http://localhost:8080/api/admin/dashboard",
+                "https://ai-job-portal-xx67.onrender.com/api/jobs",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`

@@ -20,7 +20,7 @@ function JobsList() {
           const email = localStorage.getItem("email");
 
             const response = await axios.get(
-                `http://localhost:8080/api/jobs/recruiter/${email}`,
+                `https://ai-job-portal-xx67.onrender.com/api/jobs/recruiter/${email}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -45,7 +45,7 @@ function JobsList() {
             const token = localStorage.getItem("token");
 
             await axios.delete(
-                `http://localhost:8080/api/jobs/${id}`,
+                `https://ai-job-portal-xx67.onrender.com/api/jobs/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`

@@ -17,7 +17,7 @@ function ManageUsers() {
             const token = localStorage.getItem("token");
 
             const response = await axios.get(
-                "http://localhost:8080/api/users",
+                "https://ai-job-portal-xx67.onrender.com/api/users",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -47,7 +47,7 @@ function ManageUsers() {
             const token = localStorage.getItem("token");
 
             await axios.delete(
-                `http://localhost:8080/api/users/${id}`,
+                `https://ai-job-portal-xx67.onrender.com/api/users/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`

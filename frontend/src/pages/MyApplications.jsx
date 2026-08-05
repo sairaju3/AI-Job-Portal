@@ -17,7 +17,7 @@ function MyApplications() {
             const userId = localStorage.getItem("userId");
 
             const response = await axios.get(
-                `http://localhost:8080/api/applications/user/${userId}`,
+                `https://ai-job-portal-xx67.onrender.com/api/applications/user/${userId}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`

@@ -20,12 +20,12 @@ function JobsList() {
 
         try {
 
-            let url = "http://localhost:8080/api/jobs";
+            let url = "https://ai-job-portal-xx67.onrender.com/api/jobs";
 
             // Recruiter should only see their own jobs
             if (role === "Recruiter") {
                 const email = localStorage.getItem("email");
-                url = `http://localhost:8080/api/jobs/recruiter/${email}`;
+                url = `https://ai-job-portal-xx67.onrender.com/api/jobs/recruiter/${email}`;
             }
 
             const response = await axios.get(url, {
@@ -49,7 +49,7 @@ function JobsList() {
         try {
 
             await axios.delete(
-                `http://localhost:8080/api/jobs/${id}`,
+                `https://ai-job-portal-xx67.onrender.com/api/jobs/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -74,7 +74,7 @@ function JobsList() {
         try {
 
             await axios.post(
-                `http://localhost:8080/api/applications/apply?userId=${userId}&jobId=${jobId}&resumeId=${resumeId}`,
+                `https://ai-job-portal-xx67.onrender.com/api/applications/apply?userId=${userId}&jobId=${jobId}&resumeId=${resumeId}`,
                 {},
                 {
                     headers: {

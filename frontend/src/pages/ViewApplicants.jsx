@@ -13,7 +13,7 @@ function ViewApplicants() {
             const token = localStorage.getItem("token");
 
             const response = await axios.get(
-                `http://localhost:8080/api/applications/job/${jobId}`,
+                `https://ai-job-portal-xx67.onrender.com/api/applications/job/${jobId}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -39,7 +39,7 @@ function ViewApplicants() {
             const token = localStorage.getItem("token");
 
             await axios.put(
-                `http://localhost:8080/api/applications/status/${applicationId}?status=${status}`,
+                `https://ai-job-portal-xx67.onrender.com/api/applications/status/${applicationId}?status=${status}`,
                 {},
                 {
                     headers: {
@@ -154,7 +154,7 @@ function ViewApplicants() {
                                         className="btn btn-dark btn-sm"
                                         onClick={() =>
                                             window.open(
-                                                `http://localhost:8080/api/resumes/download/${app.resumeId}`,
+                                                `https://ai-job-portal-xx67.onrender.com/api/resumes/download/${app.resumeId}`,
                                                 "_blank"
                                             )
                                         }

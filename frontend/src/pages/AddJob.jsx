@@ -31,7 +31,7 @@ function AddJob() {
             const token = localStorage.getItem("token");
 
             await axios.post(
-                "http://localhost:8080/api/jobs",
+                "https://ai-job-portal-xx67.onrender.com/api/jobs",
                 job,
                 {
                     headers: {

@@ -13,7 +13,7 @@ function JobRecommendation() {
             const token = localStorage.getItem("token");
 
             const response = await axios.get(
-                `http://localhost:8080/api/job-match/recommend/${resumeId}`,
+                `https://ai-job-portal-xx67.onrender.com/api/job-match/recommend/${resumeId}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`

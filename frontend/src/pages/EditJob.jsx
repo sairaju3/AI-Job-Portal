@@ -27,7 +27,7 @@ function EditJob() {
             const token = localStorage.getItem("token");
 
             const response = await axios.get(
-                `http://localhost:8080/api/jobs/${id}`,
+                `https://ai-job-portal-xx67.onrender.com/api/jobs/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -64,7 +64,7 @@ function EditJob() {
             const token = localStorage.getItem("token");
 
             await axios.put(
-                `http://localhost:8080/api/jobs/${id}`,
+                `https://ai-job-portal-xx67.onrender.com/api/jobs/${id}`,
                 job,
                 {
                     headers: {
