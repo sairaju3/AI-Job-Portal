@@ -1,11 +1,10 @@
 package com.aijobportal.backend.service;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.tika.Tika;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +25,11 @@ public class JobMatchService {
 
     public JobMatchResponse matchResumeWithJob(Resume resume, Job job) throws Exception {
 
-        Tika tika = new Tika();
+    	String resumeText = resume.getResumeText();
 
-        String resumeText = tika.parseToString(new File(resume.getFilePath()));
+    	if (resumeText == null || resumeText.isBlank()) {
+    	    throw new RuntimeException("Resume text not found");
+    	}
 
         List<String> jobSkills =
                 Arrays.stream(job.getSkills().split(","))

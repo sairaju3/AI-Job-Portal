@@ -28,8 +28,4 @@ public class ResumeAnalysisController {
 
         return aiResumeService.analyzeResume(resume.getFilePath());
     }
-    @GetMapping("/test")
-    public String test() {
-        return "Resume Analysis Controller Working";
-    }
 }
