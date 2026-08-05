@@ -20,8 +20,11 @@ public class JobController {
 
     // Add Job
     @PostMapping
-    public Job addJob(@RequestBody Job job) {
-        return jobService.addJob(job);
+    public Job addJob(
+            @RequestBody Job job,
+            @RequestParam String recruiterEmail) {
+
+        return jobService.addJob(job, recruiterEmail);
     }
 
     // Get All Jobs

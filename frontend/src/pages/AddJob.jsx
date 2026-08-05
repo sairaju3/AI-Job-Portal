@@ -28,10 +28,10 @@ function AddJob() {
 
         try {
 
-            const token = localStorage.getItem("token");
+           const email = localStorage.getItem("email");
 
             await axios.post(
-                "https://ai-job-portal-xx67.onrender.com/api/jobs",
+                `https://ai-job-portal-xx67.onrender.com/api/jobs?recruiterEmail=${encodeURIComponent(email)}`,
                 job,
                 {
                     headers: {

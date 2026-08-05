@@ -16,7 +16,13 @@ public class JobService {
     private JobRepository jobRepository;
 
     // Add Job
-    public Job addJob(Job job) {
+    public Job addJob(Job job, String recruiterEmail) {
+
+        job.setPostedDate(LocalDate.now());
+        job.setRecruiterEmail(recruiterEmail);
+
+        return jobRepository.save(job);
+    }   public Job addJob(Job job) {
 
         job.setPostedDate(LocalDate.now());
 
