@@ -37,16 +37,23 @@ public class ResumeService {
     public Resume uploadResume(MultipartFile file, Long userId)
             throws IOException, TikaException {
 
-        File folder = new File(uploadDir);
-        if (!folder.exists()) {
-            folder.mkdirs();
-        }
+    	String uploadPath = System.getProperty("java.io.tmpdir")
+    	        + File.separator + "uploads";
 
-        Tika tika = new Tika();
-        String resumeText = tika.parseToString(file.getInputStream());
+    	File folder = new File(uploadPath);
 
-        String filePath = uploadDir + File.separator + file.getOriginalFilename();
-        file.transferTo(new File(filePath));
+    	if (!folder.exists()) {
+    	    folder.mkdirs();
+    	}
+
+    	Tika tika = new Tika();
+    	String resumeText = tika.parseToString(file.getInputStream());
+
+    	File destination = new File(folder, file.getOriginalFilename());
+
+    	file.transferTo(destination);
+
+    	String filePath = destination.getAbsolutePath();
 
         Resume resume = new Resume();
         resume.setFileName(file.getOriginalFilename());
