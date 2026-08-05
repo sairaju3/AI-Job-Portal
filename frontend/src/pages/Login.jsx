@@ -1,13 +1,16 @@
 import { useState } from "react";
 import API from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const login = async (e) => {
 
+        
         e.preventDefault();
 
         try {
@@ -23,11 +26,11 @@ function Login() {
             localStorage.setItem("email", response.data.email);
 
             if (response.data.role === "Admin") {
-                window.location.href = "/admin";
+            navigate("/admin");
             } else if (response.data.role === "Recruiter") {
-                window.location.href = "/recruiter";
+                navigate("/recruiter");
             } else {
-                window.location.href = "/dashboard";
+                navigate("/dashboard");
             }
 
         } catch (error) {
