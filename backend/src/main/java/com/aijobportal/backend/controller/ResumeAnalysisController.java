@@ -26,6 +26,6 @@ public class ResumeAnalysisController {
         Resume resume = resumeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Resume not found"));
 
-        return aiResumeService.analyzeResume(resume.getFilePath());
+        return aiResumeService.analyzeResume(resume.getResumeText());
     }
 }

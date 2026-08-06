@@ -32,10 +32,19 @@ public class AIResumeService {
             "JavaScript"
     );
 
-    public ResumeAnalysisResponse analyzeResume(String filePath) throws Exception {
+    
+    public ResumeAnalysisResponse analyzeResume(String text) throws Exception {
 
-        Tika tika = new Tika();
-        String text = tika.parseToString(new File(filePath));
+//    	System.out.println("File Path: " + filePath);
+//
+//        File file = new File(filePath);
+//
+//        System.out.println("Absolute: " + file.getAbsolutePath());
+//        System.out.println("Exists: " + file.exists());
+//        System.out.println("Readable: " + file.canRead());
+//       
+       // Tika tika = new Tika();
+       // String text = tika.parseToString(new File(filePath));
 
         ResumeAnalysisResponse response = new ResumeAnalysisResponse();
 
