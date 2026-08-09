@@ -5,6 +5,7 @@ function ManageUsers() {
 
     const [users, setUsers] = useState([]);
     const [search, setSearch] = useState("");
+    const role = localStorage.getItem("role");
 
     useEffect(() => {
         loadUsers();
@@ -89,7 +90,7 @@ function ManageUsers() {
                 <div className="card-body">
 
                     <h2 className="text-center text-primary mb-4">
-                        👥 Manage Users
+                        👥 Search Candidates
                     </h2>
 
                     <input
@@ -147,12 +148,14 @@ function ManageUsers() {
 
                                         <td>
 
+                                            {role === "Admin" && (
                                             <button
-                                                className="btn btn-danger btn-sm"
+                                                className="btn btn-danger"
                                                 onClick={() => deleteUser(user.id)}
                                             >
                                                 🗑 Delete
                                             </button>
+                                        )}
 
                                         </td>
 
