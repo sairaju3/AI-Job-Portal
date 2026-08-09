@@ -120,7 +120,7 @@ function App() {
                 <Route
                     path="/manage-users"
                     element={
-                        token && role === "Admin"
+                        token && (role === "Admin" || role === "Recruiter")
                             ? <ManageUsers />
                             : <Navigate to="/login" />
                     }
