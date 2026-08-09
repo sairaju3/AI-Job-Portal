@@ -112,7 +112,7 @@ function ManageUsers() {
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Role</th>
-                                    <th>Action</th>
+                                    {role === "Admin" && <th>Action</th>}
 
                                 </tr>
 
