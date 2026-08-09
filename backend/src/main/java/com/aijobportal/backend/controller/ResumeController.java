@@ -41,12 +41,20 @@ public class ResumeController {
             Authentication authentication)
             throws IOException, TikaException {
 
+        if (authentication == null) {
+            throw new RuntimeException("User is not authenticated");
+        }
+
         String email = authentication.getName();
 
         User user = userService.findByEmail(email);
 
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+
         return resumeService.uploadResume(file, user.getId());
-    }
+    }	
     
     @GetMapping("/match/{resumeId}/{jobId}")
     public JobMatchResponse matchResume(

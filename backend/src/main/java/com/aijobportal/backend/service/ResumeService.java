@@ -9,7 +9,7 @@ import java.util.List;
 import org.apache.tika.Tika;
 import org.apache.tika.exception.TikaException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,8 +27,7 @@ public class ResumeService {
     @Autowired
     private JobRepository jobRepository;
 
-    @Value("${file.upload-dir}")
-    private String uploadDir;
+   
 
     public ResumeService(ResumeRepository resumeRepository) {
         this.resumeRepository = resumeRepository;
@@ -37,28 +36,39 @@ public class ResumeService {
     public Resume uploadResume(MultipartFile file, Long userId)
             throws IOException, TikaException {
 
-    	String uploadPath = System.getProperty("java.io.tmpdir")
-    	        + File.separator + "uploads";
+        String uploadPath = System.getProperty("java.io.tmpdir")
+                + File.separator + "uploads";
 
-    	File folder = new File(uploadPath);
+        File folder = new File(uploadPath);
 
-    	if (!folder.exists()) {
-    	    folder.mkdirs();
-    	}
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
 
-    	Tika tika = new Tika();
-    	String resumeText = tika.parseToString(file.getInputStream());
+        if (file.isEmpty()) {
+            throw new RuntimeException("Resume file is empty");
+        }
 
-    	File destination = new File(folder, file.getOriginalFilename());
+        Tika tika = new Tika();
+        String resumeText = tika.parseToString(file.getInputStream());
 
-    	file.transferTo(destination);
+        String originalName = file.getOriginalFilename();
 
-    	String filePath = destination.getAbsolutePath();
+        if (originalName == null || originalName.isBlank()) {
+            originalName = "resume.pdf";
+        }
+
+        String fileName = System.currentTimeMillis() + "_" + originalName;
+
+        File destination = new File(folder, fileName);
+
+        file.transferTo(destination);
 
         Resume resume = new Resume();
-        resume.setFileName(file.getOriginalFilename());
+
+        resume.setFileName(originalName);
         resume.setFileType(file.getContentType());
-        resume.setFilePath(filePath);
+        resume.setFilePath(destination.getAbsolutePath());
         resume.setResumeText(resumeText);
         resume.setUserId(userId);
 
