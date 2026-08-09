@@ -32,11 +32,16 @@ function Register() {
 
             navigate("/login");
 
-        } catch (error) {
+       } catch (error) {
 
-            console.log(error);
+            console.log("Registration Error:", error);
+            console.log("Backend Response:", error.response?.data);
 
-            alert("Registration Failed");
+            alert(
+                error.response?.data?.message ||
+                error.response?.data?.error ||
+                "Registration Failed"
+            );
 
         }
 
