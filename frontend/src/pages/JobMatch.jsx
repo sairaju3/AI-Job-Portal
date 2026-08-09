@@ -14,7 +14,7 @@ function JobMatch() {
             const token = localStorage.getItem("token");
 
             const response = await axios.get(
-                `https://ai-job-portal-xx67.onrender.com/api/resumes/match/${resumeId}/${jobId}`,
+                `https://ai-job-portal-xx67.onrender.com/api/resumes/match/${jobId}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`

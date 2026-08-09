@@ -3,7 +3,9 @@ package com.aijobportal.backend.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.security.core.Authentication;
+import com.aijobportal.backend.entity.User;
+import com.aijobportal.backend.service.UserService;
 import com.aijobportal.backend.dto.JobMatchResponse;
 import com.aijobportal.backend.entity.Job;
 import com.aijobportal.backend.entity.Resume;
@@ -18,32 +20,51 @@ public class JobMatchController  {
     private final ResumeRepository resumeRepository;
     private final JobRepository jobRepository;
     private final JobMatchService jobMatchService;
+    private final UserService userService;
 
-    public JobMatchController(ResumeRepository resumeRepository,
-                              JobRepository jobRepository,
-                              JobMatchService jobMatchService) {
+    public JobMatchController(
+            ResumeRepository resumeRepository,
+            JobRepository jobRepository,
+            JobMatchService jobMatchService,
+            UserService userService) {
+
         this.resumeRepository = resumeRepository;
         this.jobRepository = jobRepository;
         this.jobMatchService = jobMatchService;
+        this.userService = userService;
     }
 
-    @GetMapping("/match/{resumeId}/{jobId}")
+    @GetMapping("/match/{jobId}")
     public JobMatchResponse matchResume(
-            @PathVariable Long resumeId,
-            @PathVariable Long jobId) throws Exception {
+            @PathVariable Long jobId,
+            Authentication authentication) throws Exception {
 
-        Resume resume = resumeRepository.findById(resumeId)
-                .orElseThrow(() -> new RuntimeException("Resume not found"));
+        String email = authentication.getName();
+
+        User user = userService.findByEmail(email);
+
+        Resume resume = resumeRepository.findByUserId(user.getId())
+                .orElseThrow(() ->
+                        new RuntimeException("Please upload your resume first"));
 
         Job job = jobRepository.findById(jobId)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
 
         return jobMatchService.matchResumeWithJob(resume, job);
     }
-    @GetMapping("/recommend/{resumeId}")
+    
+    @GetMapping("/recommend")
     public List<JobMatchResponse> recommendJobs(
-            @PathVariable Long resumeId) throws Exception {
+            Authentication authentication) throws Exception {
 
-        return jobMatchService.matchResumeWithAllJobs(resumeId);
+        String email = authentication.getName();
+
+        User user = userService.findByEmail(email);
+
+        Resume resume = resumeRepository.findByUserId(user.getId())
+                .orElseThrow(() ->
+                        new RuntimeException("Please upload your resume first"));
+
+        return jobMatchService.matchResumeWithAllJobs(resume.getId());
     }
 }
