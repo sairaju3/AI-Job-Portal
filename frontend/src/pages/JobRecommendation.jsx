@@ -24,7 +24,7 @@ function JobRecommendation() {
             setJobs(response.data);
 
         } catch (error) {
-
+            
             console.log(error);
             alert("Unable to fetch job recommendations");
 

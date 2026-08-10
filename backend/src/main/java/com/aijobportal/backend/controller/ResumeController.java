@@ -56,13 +56,7 @@ public class ResumeController {
         return resumeService.uploadResume(file, user.getId());
     }	
     
-    @GetMapping("/match/{resumeId}/{jobId}")
-    public JobMatchResponse matchResume(
-            @PathVariable Long resumeId,
-            @PathVariable Long jobId) {
-
-        return resumeService.matchResume(resumeId, jobId);
-    }
+ 
     
     @GetMapping("/download/{resumeId}")
     public ResponseEntity<Resource> downloadResume(@PathVariable Long resumeId)
