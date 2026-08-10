@@ -3,15 +3,24 @@ import axios from "axios";
 
 function JobMatch() {
 
-    const [resumeId, setResumeId] = useState("");
     const [jobId, setJobId] = useState("");
     const [result, setResult] = useState(null);
 
     const matchJob = async () => {
 
+        if (!jobId) {
+            alert("Please enter Job ID");
+            return;
+        }
+
         try {
 
             const token = localStorage.getItem("token");
+
+            if (!token) {
+                alert("Please login first");
+                return;
+            }
 
             const response = await axios.get(
                 `https://ai-job-portal-xx67.onrender.com/api/job-match/match/${jobId}`,
@@ -27,10 +36,16 @@ function JobMatch() {
         } catch (error) {
 
             console.log(error);
-            alert("Job Match Failed");
 
+            if (error.response) {
+                alert(
+                    error.response.data?.message ||
+                    "Job Match Failed"
+                );
+            } else {
+                alert("Unable to connect to server");
+            }
         }
-
     };
 
     return (
@@ -45,22 +60,12 @@ function JobMatch() {
                         🤖 AI Job Match
                     </h2>
 
-                    <div className="row">
+                    <div className="row justify-content-center">
 
-                        <div className="col-md-6">
-
-                            <input
-                                className="form-control mb-3"
-                                placeholder="Enter Resume ID"
-                                value={resumeId}
-                                onChange={(e) => setResumeId(e.target.value)}
-                            />
-
-                        </div>
-
-                        <div className="col-md-6">
+                        <div className="col-md-8">
 
                             <input
+                                type="number"
                                 className="form-control mb-3"
                                 placeholder="Enter Job ID"
                                 value={jobId}
@@ -95,12 +100,13 @@ function JobMatch() {
                                 <hr />
 
                                 <h4 className="text-center">
-
                                     Match Score
-
                                 </h4>
 
-                                <div className="progress mb-4" style={{ height: "30px" }}>
+                                <div
+                                    className="progress mb-4"
+                                    style={{ height: "30px" }}
+                                >
 
                                     <div
                                         className="progress-bar bg-success"
@@ -120,23 +126,21 @@ function JobMatch() {
                                         <div className="card border-success">
 
                                             <div className="card-header bg-success text-white">
-
                                                 ✅ Matching Skills
-
                                             </div>
 
                                             <div className="card-body">
 
                                                 <ul>
-
-                                                    {result.matchingSkills.map((skill, index) => (
-
-                                                        <li key={index}>
-                                                            {skill}
-                                                        </li>
-
-                                                    ))}
-
+                                                    {result.matchingSkills &&
+                                                        result.matchingSkills.map(
+                                                            (skill, index) => (
+                                                                <li key={index}>
+                                                                    {skill}
+                                                                </li>
+                                                            )
+                                                        )
+                                                    }
                                                 </ul>
 
                                             </div>
@@ -150,23 +154,21 @@ function JobMatch() {
                                         <div className="card border-danger">
 
                                             <div className="card-header bg-danger text-white">
-
                                                 ❌ Missing Skills
-
                                             </div>
 
                                             <div className="card-body">
 
                                                 <ul>
-
-                                                    {result.missingSkills.map((skill, index) => (
-
-                                                        <li key={index}>
-                                                            {skill}
-                                                        </li>
-
-                                                    ))}
-
+                                                    {result.missingSkills &&
+                                                        result.missingSkills.map(
+                                                            (skill, index) => (
+                                                                <li key={index}>
+                                                                    {skill}
+                                                                </li>
+                                                            )
+                                                        )
+                                                    }
                                                 </ul>
 
                                             </div>
@@ -190,7 +192,6 @@ function JobMatch() {
         </div>
 
     );
-
 }
 
 export default JobMatch;
