@@ -43,7 +43,8 @@ public class JobMatchController  {
 
         User user = userService.findByEmail(email);
 
-        Resume resume = resumeRepository.findByUserId(user.getId())
+        Resume resume = resumeRepository
+                .findFirstByUserIdOrderByIdDesc(user.getId())
                 .orElseThrow(() ->
                         new RuntimeException("Please upload your resume first"));
 
@@ -61,7 +62,8 @@ public class JobMatchController  {
 
         User user = userService.findByEmail(email);
 
-        Resume resume = resumeRepository.findByUserId(user.getId())
+        Resume resume = resumeRepository
+                .findFirstByUserIdOrderByIdDesc(user.getId())
                 .orElseThrow(() ->
                         new RuntimeException("Please upload your resume first"));
 
