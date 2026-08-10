@@ -3,7 +3,6 @@ import axios from "axios";
 
 function JobRecommendation() {
 
-    const [resumeId, setResumeId] = useState("");
     const [jobs, setJobs] = useState([]);
 
     const recommendJobs = async () => {
@@ -12,8 +11,13 @@ function JobRecommendation() {
 
             const token = localStorage.getItem("token");
 
+            if (!token) {
+                alert("Please login first");
+                return;
+            }
+
             const response = await axios.get(
-                `https://ai-job-portal-xx67.onrender.com/api/job-match/recommend`,
+                "https://ai-job-portal-xx67.onrender.com/api/job-match/recommend",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -24,9 +28,17 @@ function JobRecommendation() {
             setJobs(response.data);
 
         } catch (error) {
-            
+
             console.log(error);
-            alert("Unable to fetch job recommendations");
+
+            if (error.response) {
+                alert(
+                    error.response.data?.message ||
+                    "Unable to fetch job recommendations"
+                );
+            } else {
+                alert("Unable to connect to server");
+            }
 
         }
 
@@ -48,13 +60,6 @@ function JobRecommendation() {
 
                         <div className="col-md-6">
 
-                            <input
-                                className="form-control mb-3"
-                                placeholder="Enter Resume ID"
-                                value={resumeId}
-                                onChange={(e) => setResumeId(e.target.value)}
-                            />
-
                             <button
                                 className="btn btn-success w-100"
                                 onClick={recommendJobs}
@@ -74,7 +79,10 @@ function JobRecommendation() {
 
                 {jobs.map((job) => (
 
-                    <div className="col-lg-6 mb-4" key={job.jobId}>
+                    <div
+                        className="col-lg-6 mb-4"
+                        key={job.jobId}
+                    >
 
                         <div className="card shadow-lg border-0 rounded-4 h-100">
 
@@ -123,22 +131,22 @@ function JobRecommendation() {
                                         <div className="card border-success mb-3">
 
                                             <div className="card-header bg-success text-white">
-
                                                 ✅ Matching Skills
-
                                             </div>
 
                                             <div className="card-body">
 
                                                 <ul className="mb-0">
 
-                                                    {job.matchingSkills.map((skill, index) => (
-
-                                                        <li key={index}>
-                                                            {skill}
-                                                        </li>
-
-                                                    ))}
+                                                    {job.matchingSkills &&
+                                                        job.matchingSkills.map(
+                                                            (skill, index) => (
+                                                                <li key={index}>
+                                                                    {skill}
+                                                                </li>
+                                                            )
+                                                        )
+                                                    }
 
                                                 </ul>
 
@@ -153,22 +161,22 @@ function JobRecommendation() {
                                         <div className="card border-danger mb-3">
 
                                             <div className="card-header bg-danger text-white">
-
                                                 ❌ Missing Skills
-
                                             </div>
 
                                             <div className="card-body">
 
                                                 <ul className="mb-0">
 
-                                                    {job.missingSkills.map((skill, index) => (
-
-                                                        <li key={index}>
-                                                            {skill}
-                                                        </li>
-
-                                                    ))}
+                                                    {job.missingSkills &&
+                                                        job.missingSkills.map(
+                                                            (skill, index) => (
+                                                                <li key={index}>
+                                                                    {skill}
+                                                                </li>
+                                                            )
+                                                        )
+                                                    }
 
                                                 </ul>
 
@@ -186,6 +194,11 @@ function JobRecommendation() {
 
                                 <button
                                     className="btn btn-primary w-100"
+                                    onClick={() => {
+                                        alert(
+                                            `Apply for ${job.jobTitle}`
+                                        );
+                                    }}
                                 >
                                     🚀 Apply Now
                                 </button>
@@ -203,7 +216,6 @@ function JobRecommendation() {
         </div>
 
     );
-
 }
 
 export default JobRecommendation;
