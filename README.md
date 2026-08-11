@@ -112,4 +112,32 @@ Security Resume      Logic
           ↓
      Railway MySQL
 
+---
+
+## 🔄 Application Flow
+
+```text
+User Login / Registration
+          ↓
+     JWT Authentication
+          ↓
+    Candidate Dashboard
+          ↓
+     Upload Resume
+          ↓
+   Apache Tika Extraction
+          ↓
+    Resume Text Storage
+          ↓
+   Skill Identification
+          ↓
+ ┌────────┴───────────┐
+ ↓                    ↓
+Job Matching      Job Recommendation
+ ↓                    ↓
+Match Percentage   Recommended Jobs
+          ↓
+      Apply for Job
+          ↓
+   Track Application
 
